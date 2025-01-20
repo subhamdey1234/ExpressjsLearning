@@ -15,11 +15,13 @@ app.use((req,res,next)=>{
 
 app.get("/",(req,res,next)=>{
 console.log("Hii");
+res.write("Hii");
 next();
 
 })
 app.get("/",(req,res,next)=>{
     console.log("Hii 2");
+    res.write("hii 2");
 next();
     
 })
