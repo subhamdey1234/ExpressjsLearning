@@ -43,11 +43,47 @@
    <img src="https://wallpapercat.com/w/full/0/6/b/476391-3840x2160-desktop-4k-benedict-cumberbatch-doctor-strange-wallpaper-photo.jpg" alt="" height="500px" width="400px">
    
 </div>
+
+
+<div class="buttons">
+  <button id="send" class="btn btn-success">Send Data</button>
+  <button id="get" class="btn btn-danger">Get Data</button>
+</div>
 </div>
 
 <div class="footer mt-3 fixed-bottom bg-dark">
 <span id="copy" class="text-white">Copyright@subham</span>
 </div>
+
+
+<script>
+
+  let getbtn=document.getElementById("get");
+  let sendbtn=document.getElementById("send");
+
+  getbtn.addEventListener("click",()=>{
+     
+    fetch("/data").then(res=>res.json()).then(data=>console.log(data)).catch(console.log("Error")
+    )
+   
+    alert("Got The  Data At Server")
     
+  })
+
+  sendbtn.addEventListener("click",async()=>{
+let mydata={msg:"Hii I am Subham Dey How Are u?"};
+let res=await fetch("/data",{
+  method:"POST",
+  headers:{"Content-Type":"application/json"}, //additional Info
+  body:JSON.stringify(mydata)    //Request Payload
+})
+let data=await res.json(); //Server Response Data
+console.log(data);
+
+
+})
+</script>
+
+
 </body>
 </html>

@@ -1,9 +1,19 @@
-import express from "express";
+import express, { urlencoded } from "express";
 
 const app=express();
+//   Static Server..
 app.use(express.static("E:/m17jspider/express.js/Staticserver/public"))
 
-//Api/Routing..
+
+/// MiddleWare that will parse Json Data(express.json())
+app.use(express.json())
+
+//Middleware to parse url Encoded Data (express.urlencoded())
+
+app.use(express.urlencoded({ extended: true }));
+
+
+//   Api/Routing..
 app.get("/",(req,res)=>{
     res.sendFile("E:/m17jspider/express.js/Staticserver/public/pages/Home.html");
 })
@@ -29,8 +39,28 @@ app.get("/login",(req,res)=>{
     res.sendFile("E:/m17jspider/express.js/Staticserver/public/pages/login.html")
 })
 
+//----GET API-----
+app.get("/data",(req,res)=>{
+    res.status(200).send({name:"Subham Dey",address:"Bangalore Marathalli"});
+})
+
+// ----POST API----
+app.post("/data",(req,res)=>{
+    console.log(req.headers["content-type"]);
+    console.log(req.body);   //Payload (Need To Parse the Data).
+    res.status(200).send({message:"Data Recieved"});
+    
+})
+
+
+app.post("/urlData",(req,res)=>{
+    console.log(req.body);//url payload
+    res.status(200).send({message:"Form Submitted"})
+})
+
 let port=7000;
-app.listen(port,"localhost",()=>{
-    console.log(`Server Started http://localhost:${port}`);
+let urllink="localhost";
+app.listen(port,urllink,()=>{
+    console.log(`Server Started http://${urllink}:${port}`);
     
 })
