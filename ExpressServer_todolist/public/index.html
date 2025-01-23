@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+
+</head>
+<body>
+    <div class="h-screen bg-slate-500 text-white">
+   
+        <h1 class="text-3xl text-center underline ">TODO LIST IN EXPRESS.JS</h1>
+         
+        <div class="flex h-20 mt-5 bg-slate-400 rounded-3xl items-center gap-4 px-5 lg:w-[900px] m-auto sm:w-[500px] md:w-[700px]">
+            <input type="text" id="task" class="flex-1 text-4xl text-black placeholder:text-center rounded-full border-[3.5px] border-t-red-400 border-r-red-400 border-l-green-600  border-b-green-600 shadow-lg placeholder:text-black" placeholder="<  Enter the Task  >">
+            <button class="bg-green-600 px-4 border border-white text-3xl font-bold py-1 rounded-3xl" id="add-btn">Add</button>
+        </div>
+
+        <div class="flex flex-col gap-4 bg-slate-300 lg:w-[900px] sm:w-[500px] md:w-[700px] m-auto rounded-xl mt-4 p-4" id="task-list">
+
+        </div>
+
+    </div>
+
+<script>
+    let tasks=document.getElementById("task");
+    let addbutton=document.getElementById("add-btn");
+    const taskcontainer=document.getElementById("task-list");
+
+    addbutton.addEventListener("click",()=>{
+   const text=tasks.value;
+   if (text) {
+    const tsk={
+        text,
+        id:Math.floor(Math.random()*1000)
+    }
+sendTaskToServer(tsk);
+tasks.value="";
+
+
+   }
+   else{
+    alert("Write some Tasks before adding");
+   }
+
+    })
+
+    async function sendTaskToServer(task) {
+            const response = await fetch("/todo/add", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(task)
+            })
+            const data = await response.json()
+            console.log(data);
+            displayTasks(data)
+        }
+
+        //displaying the tasks
+        function displayTasks(tasks) {
+            let str = ""
+            tasks.forEach(task => {
+                str += `
+                <div class="flex justify-between align-center px-4 bg-gray-500 py-2">
+                <h1 class="text-3xl flex-1 ps-2">${task.text}</h1>
+                <div class="flex gap-4">
+                    <button class="bg-blue-500 px-4 border border-white text-2xl ">EDIT</button>
+                    <button class="bg-red-500 px-4 border border-white text-2xl ">DEL</button>
+                </div>
+            </div>`
+            })
+            taskcontainer.innerHTML = str
+        }
+
+        window.addEventListener("load", async () => {
+            fetch("/todo/get")
+                .then(response => response.json())
+                .then(data => displayTasks(data))
+                .catch(err => console.log(err))
+        })
+
+</script>
+
+</body>
+</html>
