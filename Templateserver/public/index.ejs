@@ -6,7 +6,9 @@
     <title>Document</title>
 </head>
 <body>
-    <h1>This is a Dynamic Html</h1>
+        <!-- PARTIALS --->
+
+    <%- include("partials/Header.ejs")  %>
     
     <h2>
         Name: <%=name %>
@@ -39,6 +41,12 @@
             
             </h1>
         </div>    
+
+        <!--Navigate --->
+ <div style="display: flex;gap: 30px;">
+        <a href="/about">About Page</a>
+        <a href="/login">Login Page</a>
+</div>
 
 
 </body>

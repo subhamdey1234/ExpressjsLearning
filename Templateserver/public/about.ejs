@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <!-- PARTIALS --->
+    <%- include("partials/Header.ejs")  %>
+
+    <h1 style="text-align: center;text-decoration: underline;">About Page</h1>
+    <ol>
+        <% for (let i = 0; i <fruits.length; i++) {%>
+          <li>
+            <%=fruits[i]%>
+</li>
+
+            
+        <%} %>
+    </ol>
+</body>
+</html>
